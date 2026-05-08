@@ -11,6 +11,8 @@ import java.util.Date;
 @Entity(name = "Articles")
 @Setter
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @RequiredArgsConstructor
 @ToString
