@@ -21,9 +21,9 @@ public class UserServiceTest {
         var newUser = userService.createUser(new createUserReqest(
                 "rachit",
                 "pass123",
-                "rachit@gmail.com",
-                "My name is rachit",
-                "http.rac.com"
+                "rachit@gmail.com"
+                //"My name is rachit",
+                //"http.rac.com"
         ));
         Assertions.assertNotNull(newUser);
         Assertions.assertEquals(newUser.getUsername(), "rachit");

@@ -1,5 +1,6 @@
 package com.springproject.blogapp.users;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,14 +24,18 @@ public class UserEntity {
 
     @Column(nullable = false)
     @NonNull
+    private String password;
+
+    @Column(nullable = false)
+    @NonNull
     private String email;
 
-    @Column(nullable = false)
-    @NonNull
+    //@Column(nullable = false)
+    @Nullable
     private String bio;
 
-    @Column(nullable = false)
-    @NonNull
+    //@Column(nullable = false)
+    @Nullable
     private String image;
 
 }

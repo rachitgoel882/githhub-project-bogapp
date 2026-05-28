@@ -2,35 +2,30 @@ package com.springproject.blogapp.users;
 
 import com.springproject.blogapp.users.dtos.createUserReqest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    class UserNotFoundException extends IllegalArgumentException {
-        public UserNotFoundException(String username) {
-            super("User with username" + username + " not found");
-        }
-
-        public UserNotFoundException(Long id) {
-            super("User with id" + id + " not found");
-        }
-    }
-
     @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public UserEntity createUser(createUserReqest req){
         var newUser = UserEntity.builder()
                 .username(req.getUsername())
-        //        .password(password) #TODO: encrypt password
+                .password(passwordEncoder.encode(req.getPassword())) //#TODO: encrypt password
                 .email(req.getEmail())
-                .bio(req.getBio())
-                .image(req.getImage())
+                //.bio(req.getBio())
+                //.image(req.getImage())
                 .build();
+
+        //newUser.setPassword(passwordEncoder.encode(req.getPassword()));
 
         return userRepository.save(newUser);
     }
@@ -52,7 +47,27 @@ public class UserService {
         if(user == null) {
             throw  new UserNotFoundException(username);
         }
+        var passMatch = passwordEncoder.matches(password, user.getPassword());
+        if(!passMatch) {
+            throw new InvalidCredentialsException();
+        }
         // TODO: match password
         return user;
+    }
+
+    public static class UserNotFoundException extends IllegalArgumentException {
+        public UserNotFoundException(String username) {
+            super("User with username " + username + " not found");
+        }
+
+        public UserNotFoundException(Long id) {
+            super("User with id" + id + " not found");
+        }
+    }
+
+    public static class InvalidCredentialsException extends IllegalArgumentException {
+        public InvalidCredentialsException() {
+            super("Invalid userId or password combination");
+        }
     }
 }

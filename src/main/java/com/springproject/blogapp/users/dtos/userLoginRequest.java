@@ -7,15 +7,9 @@ import lombok.Setter;
 
 @Data
 @Setter(AccessLevel.NONE)
-public class createUserReqest {
+public class userLoginRequest {
     @NonNull
     String username;
     @NonNull
     String password;
-    @NonNull
-    String email;
-    /*@NonNull
-    private String bio;
-    @NonNull
-    private String image;*/
 }
