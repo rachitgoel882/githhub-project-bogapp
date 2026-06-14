@@ -21,7 +21,7 @@ public class JWTService {
 
     public Long retriveUserId(String token){
         var decodedJWT = JWT.decode(token);
-        var user = Long.valueOf(decodedJWT.getSubject());
-        return user;
+        var userId = Long.valueOf(decodedJWT.getSubject());
+        return userId;
     }
 }
