@@ -13,12 +13,12 @@ public class ArticleController {
         return "article created";
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public String getArticleById(@PathVariable("id") String id){
         return "article retrieved with id: " + id;
     }
 
-    @PostMapping
+    @PostMapping("")
     public String createArticle(@AuthenticationPrincipal UserEntity user){
         return "article created by user: " + user.getUsername();
     }
