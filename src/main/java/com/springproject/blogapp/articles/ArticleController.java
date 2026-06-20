@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 public class ArticleController {
 
     @GetMapping("")
-    public String getAtricle(){
+    public String getArticle(){
         return "article created";
     }
 
